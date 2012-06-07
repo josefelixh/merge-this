@@ -2,7 +2,6 @@ package Test::Merges;
 use strict;
 use warnings;
 use feature qw( switch );
-use autodie qw( system );
 use base qw( Exporter Test::Builder::Module );
 
 use Try::Tiny;
@@ -60,6 +59,10 @@ sub init {
         when('darcs') { system "darcs init" }
         when('git')   { system "git init" }
         when('hg')    { system "hg init" }
+        when('svn')   { 
+          system "svnadmin create svn";
+          system "pwd";
+        }
         default       { die "Must specify VCS environment\n" }
     }
 }
@@ -72,6 +75,7 @@ sub add {
         when('darcs') { system "darcs add @files" }
         when('git')   { system "git add @files" }
         when('hg')    { system "hg  add @files" }
+        when('svn')   { system " @files" }
     }
 }
 
@@ -85,6 +89,7 @@ sub commit {
         }
         when('git') { system "git commit -a -m '$message'" }
         when('hg')  { system "hg  commit -m '$message'" }
+        when('svn') { system "" }
     }
 }
 
@@ -98,6 +103,7 @@ sub clone {
         }
         when('git') { system "git clone $source $target" }
         when('hg')  { system "hg  clone $source $target" }
+        when('svn') { system "" }
     }
 }
 
@@ -132,6 +138,7 @@ sub perform_merge {
             system "hg merge";
             system "hg commit -m 'merged from $source'";
         }
+        when('svn') { system "" }
     }
 }
 
@@ -181,6 +188,7 @@ sub move {
         when('darcs') { system "darcs move $old $new" }
         when('git')   { system "git   mv   $old $new" }
         when('hg')    { system "hg    mv   $old $new" }
+        when('svn')   { system "" }
     }
 }
 

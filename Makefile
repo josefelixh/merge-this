@@ -1,5 +1,5 @@
-bzr:
-	env VCS=bzr prove -lr t
+svn:
+	env VCS=svn prove -lr t
 
 darcs:
 	env VCS=darcs prove -lr t
