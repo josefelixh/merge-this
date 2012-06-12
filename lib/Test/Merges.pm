@@ -59,10 +59,7 @@ sub init {
         when('darcs') { system "darcs init" }
         when('git')   { system "git init" }
         when('hg')    { system "hg init" }
-        when('svn')   { 
-          system "svnadmin create svn";
-          system "pwd";
-        }
+        when('svn')   { system "svnadmin create svn" }
         default       { die "Must specify VCS environment\n" }
     }
 }
@@ -75,7 +72,7 @@ sub add {
         when('darcs') { system "darcs add @files" }
         when('git')   { system "git add @files" }
         when('hg')    { system "hg  add @files" }
-        when('svn')   { system " @files" }
+        when('svn')   { system "svn import @files file:///absolute_path_to_here/svn/trunk -m 'Initial import'" }
     }
 }
 
@@ -89,7 +86,7 @@ sub commit {
         }
         when('git') { system "git commit -a -m '$message'" }
         when('hg')  { system "hg  commit -m '$message'" }
-        when('svn') { system "" }
+        when('svn') { system "svn commit -m '$message'" }
     }
 }
 
@@ -103,7 +100,7 @@ sub clone {
         }
         when('git') { system "git clone $source $target" }
         when('hg')  { system "hg  clone $source $target" }
-        when('svn') { system "" }
+        when('svn') { system "svn co $source $targe" }
     }
 }
 
